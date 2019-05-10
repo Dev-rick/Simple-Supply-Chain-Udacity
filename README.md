@@ -22,7 +22,7 @@ These instructions will get you a copy of the supply chain and lets you run the 
 
 ### Prerequisites
 
-Please make sure you've already enabled MetaMask extension in your browser and gulp installed.
+Please make sure you've enabled [MetaMask extension](https://metamask.io/) in your browser and [gulp](https://gulpjs.com/) installed.
 
 ### Installing and Using the Supply Chain Contract for Yourself on the RINKEBY TESTNETWORK
 
@@ -100,17 +100,21 @@ Please make sure you've already enabled MetaMask extension in your browser and g
 
 1. Install ganache-cli
 
-2. Open a seperate terminal window and run:
+    ```
+    $ npm install -g ganache-cli
+    ```
 
-```
-ganache-cli -m "spirit supply whale amount human item harsh scare congress discover talent hamster"
-```
+2. Open a seperate terminal window and run ganache-cli:
 
-3. then:
+    ```
+    ganache-cli -m "spirit supply whale amount human item harsh scare congress discover talent hamster"
+    ```
 
-```
-truffle test
-```
+3. Run the tests:
+
+    ```
+    truffle test
+    ```
 
 
 ## Built With
