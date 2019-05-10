@@ -5,7 +5,7 @@
 */
 
 var HDWalletProvider = require('truffle-hdwallet-provider');
-const mnemonic = require('./mnemonic');
+const secrets = require('./migration-secrets');
 
 module.exports = {
   networks: {
@@ -15,7 +15,7 @@ module.exports = {
       network_id: "*"
     },
     rinkeby: {
-      provider: () => new HDWalletProvider(mnemonic, 'https://rinkeby.infura.io/v3/c536773c21fd4cd48578a61c36bf07b9'),
+      provider: () => new HDWalletProvider(secrets.mnemonic, secrets.ENDPOINT),
       network_id: 4,
       gas : 4500000,
       gasPrice : 10000000000

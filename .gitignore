@@ -1,4 +1,5 @@
 node_modules
-mnemonic.js
+migration-secrets.js
 temp
 dist
+build
