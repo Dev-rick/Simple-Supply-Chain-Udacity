@@ -2,7 +2,7 @@
 
 This repository containts an Ethereum DApp that demonstrates a Supply Chain flow between a Seller and Buyer. The user story is similar to any commonly used supply chain process. A Seller can add items to the inventory system stored in the blockchain. A Buyer can purchase such items from the inventory system. Additionally a Seller can mark an item as Shipped, and similarly a Buyer can mark an item as Received.
 
-##Contract Address
+## Contract Address
 
 SupplyChain.sol: [ETHERSCAN](https://rinkeby.etherscan.io/address/0x33cb39Ba7E4a9818d03abB9211c966520c7f04a8)
 
@@ -47,7 +47,7 @@ Please be aware that Error handling is still under development and will be updat
 
 Enjoy!
 
-###Running the Tests
+### Running the Tests
 
 Install ganache-cli
 
