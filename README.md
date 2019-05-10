@@ -28,32 +28,32 @@ Please make sure you've already enabled MetaMask extension in your browser and g
 
 1. Clone this repository:
 
-```bash
-$ git clone https://github.com/Userrick/Simple-Supply-Chain-Udacity
-```
+    ```bash
+    $ git clone https://github.com/Userrick/Simple-Supply-Chain-Udacity
+    ```
 
 2. Install all requisite npm packages (as listed in ```package.json```):
 
-```bash
-$ npm install
-```
+    ```bash
+    $ npm install
+    ```
 
 3. Create a new file in the project folder with the name **migration-secrets.js**:
 
-```bash
-$ touch migration-secrets.js
-```
+    ```bash
+    $ touch migration-secrets.js
+    ```
 
 4. Copy the following into it:
 
-```javascript
-const secrets = {
-    mnemonic: "YOUR-SEED-WORDS-FROM-METAMASK-ACCOUNT",
-    ENDPOINT: "YOUR-INFURA-ENDPOINT_KEY"
-}
+    ```javascript
+    const secrets = {
+        mnemonic: "YOUR-SEED-WORDS-FROM-METAMASK-ACCOUNT",
+        ENDPOINT: "YOUR-INFURA-ENDPOINT_KEY"
+    }
 
-module.exports = secrets;
-```
+    module.exports = secrets;
+    ```
 
 5. Follow [this guide](https://metamask.zendesk.com/hc/en-us/articles/360015290032-How-to-Reveal-Your-Seed-Phrase) to reveal your seed words from your METAMASK account. 
 
@@ -70,31 +70,31 @@ module.exports = secrets;
 
     c) COPY the endpoint from the project to clipboard
 
-![alt text][INFURA-key]
+    ![alt text][INFURA-key]
 
-[INFURA-key]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/INFURA-key.PNG "INFURA-key"
+    [INFURA-key]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/INFURA-key.PNG "INFURA-key"
 
     d) PASTE it into the **secrets-migration.js** file
 
 7. Now launch your personal supply chain to the network by following these commands:
 
-```bash
-$ truffle compile
+    ```bash
+    $ truffle compile
 
-$ truffle migrate --reset --network rinkeby
-```
+    $ truffle migrate --reset --network rinkeby
+    ```
 
 8. Now launch the client by the following command:
 
-```bash
-$ npm run dev
-```
+    ```bash
+    $ npm run dev
+    ```
 
     In your browser, you should now be able to connect it via METAMASK on the rinkeby test network and be able to use it
 
-    If you encounter some issues let me know!
+    **If you encounter some issues let me know!**
 
-**Enjoy!**
+    **Enjoy!**
 
 ### Running the Tests
 
