@@ -14,9 +14,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 Please make sure you've already enabled MetaMask extension in your browser and gulp installed.
 
-```
-Give examples (to be clarified)
-```
 
 ### Installing
 
@@ -83,7 +80,7 @@ to make the web faster, safer, and more open. Is used via the API of INFURA ipfs
 
 ## Authors
 
-Starter code was provided by [Udacity]https://github.com/udacity/nd1309-Project-6b-Example-Template
+Starter code was provided by [Udacity](https://github.com/udacity/nd1309-Project-6b-Example-Template)
 
 
 ## Acknowledgments
