@@ -16,7 +16,7 @@ OTHER UPDATES COMING SOON
 
 ## Contract Address
 
-SupplyChain.sol: [ETHERSCAN](https://rinkeby.etherscan.io/address/0x33cb39Ba7E4a9818d03abB9211c966520c7f04a8)
+MY current contract address: [ETHERSCAN](https://rinkeby.etherscan.io/address/0x33cb39Ba7E4a9818d03abB9211c966520c7f04a8)
 
 ## Getting Started
 
@@ -62,24 +62,24 @@ module.exports = secrets;
 
 5. Follow [this guide](https://metamask.zendesk.com/hc/en-us/articles/360015290032-How-to-Reveal-Your-Seed-Phrase) to reveal your seed words from your METAMASK account. 
 
-⋅⋅⋅a) **Be sure to be on the rinkeby testnetwork**
+    a) **Be sure to be on the rinkeby testnetwork**
 
-⋅⋅⋅b) Copy your seed words from your METAMASK into the respective marked section of the **secrets-migration.js** file
+    b) Copy your seed words from your METAMASK into the respective marked section of the **secrets-migration.js** file
 
 
 6. Visit the [infura website](https://www.infura.io) 
 
-⋅⋅⋅a) login or create account
+    a) login or create account
 
-⋅⋅⋅b) create a new project 
+    b) create a new project 
 
-⋅⋅⋅c) COPY the endpoint from the project to clipboard
+    c) COPY the endpoint from the project to clipboard
 
 ![alt text][INFURA-key]
 
 [INFURA-key]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/INFURA-key.PNG "INFURA-key"
 
-⋅⋅⋅d) PASTE it into the **secrets-migration.js** file
+    d) PASTE it into the **secrets-migration.js** file
 
 7. Now launch your personal supply chain to the network by following these commands:
 
@@ -95,9 +95,9 @@ $ truffle migrate --reset --network rinkeby
 $ npm run dev
 ```
 
-⋅⋅⋅In your browser, you should now be able to connect it via METAMASK on the rinkeby test network and be able to use it
+    In your browser, you should now be able to connect it via METAMASK on the rinkeby test network and be able to use it
 
-⋅⋅⋅If you encounter some issues let me know!
+    If you encounter some issues let me know!
 
 **Enjoy!**
 
