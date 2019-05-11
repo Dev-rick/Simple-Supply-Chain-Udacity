@@ -7,9 +7,7 @@ import "./../coffeeaccesscontrol/DistributorRole.sol";
 import "./../coffeeaccesscontrol/RetailerRole.sol";
 import "./../coffeeaccesscontrol/ConsumerRole.sol";
 
-
-
-contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, ConsumerRole {
+contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole {
 
   // Define 'owner'
   address payable owner;
@@ -70,6 +68,22 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
   event Shipped(uint upc);
   event Received(uint upc);
   event Purchased(uint upc);
+  event FarmerSet();
+  event DistributorSet();
+  event RetailerSet();
+
+
+  // Define a function modifier 'onlyOwner'
+    modifier onlyOwner() {
+        require(isOwner(),
+        "You are not the owner");
+        _;
+    }
+
+  /// Check if the calling address is the owner of the contract
+  function isOwner() public view returns (bool) {
+      return msg.sender == owner;
+  }
 
   // Define a modifer that verifies the Caller
   modifier verifyCaller(address _address) {
@@ -165,32 +179,25 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
     }
   }
 
-  function setFarmer(address _address) public onlyOwner() returns(address NewFarmer) {
+  function setFarmer(address _address) public onlyOwner() {
     addFarmer(_address);
-    return(
-      NewFarmer = _address
-    );
+    emit FarmerSet();
   }
 
-  function setDistributor(address _address) public onlyOwner() returns(address NewDistributor) {
+  function setDistributor(address _address) public onlyOwner() {
     addDistributor(_address);
-    return(
-      NewDistributor = _address
-    );
+    emit DistributorSet();
   }
 
-  function setRetailer(address _address) public onlyOwner() returns(address NewRetailer) {
+  function setRetailer(address _address) public onlyOwner()  {
     addRetailer(_address);
-    return(
-      NewRetailer = _address
-    );
+    emit RetailerSet();
   }
 
   // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
   function harvestItem(
   uint _upc,
   string memory _imageHash,
-  address payable _originFarmerID,
   string memory _originFarmName,
   string memory _originFarmInformation,
   string memory _originFarmLatitude,
@@ -207,8 +214,8 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
     items[_upc].sku = sku;
     items[_upc].upc = _upc;
     items[_upc].imageHash = _imageHash;
-    items[_upc].ownerID = _originFarmerID;
-    items[_upc].originFarmerID = _originFarmerID;
+    items[_upc].ownerID = msg.sender;
+    items[_upc].originFarmerID = msg.sender;
     items[_upc].originFarmName = _originFarmName;
     items[_upc].originFarmInformation = _originFarmInformation;
     items[_upc].originFarmLatitude = _originFarmLatitude;

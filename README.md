@@ -16,6 +16,12 @@ This repository containts an Ethereum DApp that demonstrates a Supply Chain flow
 
 **OTHER UPDATES COMING SOON**
 
+* Unique Product Code Generator
+* Include OpenZeppelin structures
+* User Interface Design
+* Code optimization
+
+
 ## Getting Started
 
 These instructions will get you a copy of the supply chain and lets you run the client on the local machine and deploys your own supply chain contract to the love test network rinkeby.
@@ -74,7 +80,7 @@ Please make sure you've enabled [MetaMask extension](https://metamask.io/) in yo
 
     [INFURA-key]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/INFURA-key.PNG "INFURA-key"
 
-    d) PASTE it into the **secrets-migration.js** file
+    d) PASTE it into the respective field in the **secrets-migration.js** file
 
 7. Now launch your personal supply chain to the network by following these commands:
 
@@ -90,7 +96,7 @@ Please make sure you've enabled [MetaMask extension](https://metamask.io/) in yo
     $ npm run dev
     ```
 
-    In your browser, you should now be able to connect it via METAMASK on the rinkeby test network and be able to use it
+    Now you should be able to interact with your contract at [LOCALHOST](http://localhost:3000/) via METAMASK on the rinkeby test network.
 
     **If you encounter some issues let me know!**
 

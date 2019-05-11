@@ -10,7 +10,7 @@ var htmlclean   = require('gulp-htmlclean');
 var concat      = require('gulp-concat');
 var cleanCSS    = require('gulp-clean-css');
 var webserver   = require('gulp-webserver');
-
+var del = require('del');
 
 var paths = {
 
@@ -20,17 +20,23 @@ var paths = {
   srcHTML: 'src/**/*.html',
   srcCSS: 'src/**/*.css',
   srcJS: 'src/**/*.js',
+  srcImages: 'src/imgs/*',
 
   dist: 'dist',
   distIndex: 'dist/index.html',
   distCSS: 'dist/css',
   distJS: 'dist/**/*.js',
-  distContracts: 'dist/contracts'
+  distContracts: 'dist/contracts',
+  distImages: 'dist/images'
 };
 
 gulp.task('copy:contracts', function () {
   return gulp.src(paths.srcContracts)
     .pipe(gulp.dest(paths.distContracts));
+});
+gulp.task('copy:images', function () {
+  return gulp.src(paths.srcImages)
+    .pipe(gulp.dest(paths.distImages));
 });
 gulp.task('html', function () {
   return gulp.src(paths.srcHTML)
@@ -44,6 +50,12 @@ gulp.task('css', function () {
     .pipe(gulp.dest(paths.distCSS));
 });
 
+gulp.task('clean:dist', function () {
+  return del([
+    'dist'
+  ]);
+});
+
 
 gulp.task('copy-truffle-contract', function () {
     return gulp.src('src/js/truffle-contract.js')
@@ -51,7 +63,7 @@ gulp.task('copy-truffle-contract', function () {
     .pipe(gulp.dest('dist/js/'))
   });
 
-  gulp.task('build', gulp.series('copy:contracts', 'copy-truffle-contract', 'html', 'css', function () {
+  gulp.task('build', gulp.series('clean:dist', 'copy:contracts', 'copy:images', 'copy-truffle-contract', 'html', 'css', function () {
     // app.js is your main JS file with all your module inclusions
     return browserify({entries: './src/js/app.js', debug: true})
         .transform("babelify")

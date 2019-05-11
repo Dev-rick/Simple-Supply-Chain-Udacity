@@ -42,6 +42,30 @@ contract('SupplyChain', function(accounts) {
     console.log("Retailer: accounts[3] ", accounts[3])
     console.log("Consumer: accounts[4] ", accounts[4])
 
+    it("Testing setting roles functions", async() => {
+        const supplyChain = await SupplyChain.deployed(ownerID)
+
+        let eventEmittedFirst = false;
+        let eventEmittedSecond = false;
+        let eventEmittedThird = false;
+
+        SetFarmerID = await supplyChain.setFarmer(originFarmerID, {from: ownerID});
+        await supplyChain.contract.events.FarmerSet(function(error, event){ 
+            eventEmittedFirst = true 
+        });
+        SetDistributorID = await supplyChain.setDistributor(distributorID, {from: ownerID});
+        await supplyChain.contract.events.DistributorSet(function(error, event){ 
+            eventEmittedSecond = true 
+        });
+        SetRetailerID = await supplyChain.setRetailer(retailerID, {from: ownerID});
+        await supplyChain.contract.events.RetailerSet(function(error, event){ 
+            eventEmittedThird = true 
+        });
+        console.log(SetFarmerID);
+        assert.equal(eventEmittedFirst, true, 'Invalid Farmer Setting')  
+        assert.equal(eventEmittedSecond, true, 'Invalid Distributor Setting')  
+        assert.equal(eventEmittedThird, true, 'Invalid Retailer Setting')  
+    })
 
     // 1st Test
     it("Testing smart contract function harvestItem() that allows a farmer to harvest coffee", async() => {

@@ -2,38 +2,39 @@ App = {
     ipfs: null,
     web3Provider: null,
     contracts: {},
-    emptyAddress: "0x0000000000000000000000000000000000000000",
-    sku: 0,
-    upc: 0,
+    emptyAddress: "",
+    sku: 1,
+    upc: 1,
+    upcInput: 1,
     imageSrc: null,
     imageHash: null,
     imageBuffer: null,
-    metamaskAccountID: "0x0000000000000000000000000000000000000000",
-    ownerID: "0x0000000000000000000000000000000000000000",
-    originFarmerID: "0x0000000000000000000000000000000000000000",
+    metamaskAccountID: "0x0",
+    ownerID: "0x0",
+    originFarmerID: "0x0",
     originFarmName: null,
     originFarmInformation: null,
     originFarmLatitude: null,
     originFarmLongitude: null,
     productNotes: null,
     productPrice: 0,
-    distributorID: "0x0000000000000000000000000000000000000000",
-    retailerID: "0x0000000000000000000000000000000000000000",
-    consumerID: "0x0000000000000000000000000000000000000000",
-
+    distributorID: "",
+    retailerID: "",
+    consumerID: "",
+    addressOfContract: "0x0",
+    
     init: async function () {
-        App.readForm();
         const IPFSAPI = require('ipfs-api');
         App.ipfs = await new IPFSAPI({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
         console.log(App.TruffleContract);
         /// Setup access to blockchain
         return await App.initWeb3();
     },
-
-    readForm: function () {
-        App.sku = $("#sku").val();
-        App.upc = $("#upc").val();
-        App.ownerID = $("#ownerID").val();
+    
+    readForm: async function () {  
+        App.upc = $("#upc").val()
+        App.upcInput = $("#upcInput").val()
+        App.imageHash = await App.getImageHash()
         App.originFarmerID = $("#originFarmerID").val();
         App.originFarmName = $("#originFarmName").val();
         App.originFarmInformation = $("#originFarmInformation").val();
@@ -43,12 +44,11 @@ App = {
         App.productPrice = $("#productPrice").val();
         App.distributorID = $("#distributorID").val();
         App.retailerID = $("#retailerID").val();
-        App.consumerID = $("#consumerID").val();
-
+        
         console.log(
-            App.sku,
             App.upc,
-            App.ownerID, 
+            App.upcInput,
+            App.imageHash,
             App.originFarmerID, 
             App.originFarmName, 
             App.originFarmInformation, 
@@ -57,11 +57,10 @@ App = {
             App.productNotes, 
             App.productPrice, 
             App.distributorID, 
-            App.retailerID, 
-            App.consumerID
-        );
+            App.retailerID
+            );
     },
-
+        
     initWeb3: async function () {
         /// Find or Inject Web3 Provider
         /// Modern dapp browsers...
@@ -83,15 +82,15 @@ App = {
         else {
             App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
         }
-
+        
         App.getMetaskAccountID();
-
+        
         return App.initSupplyChain();
     },
-
+    
     getMetaskAccountID: function () {
         web3 = new Web3(App.web3Provider);
-
+        
         // Retrieving accounts
         web3.eth.getAccounts(function(err, res) {
             if (err) {
@@ -100,11 +99,11 @@ App = {
             }
             console.log('getMetaskID:',res);
             App.metamaskAccountID = res[0];
-
+            
         })
     },
-
-    initSupplyChain: function () {
+    
+    initSupplyChain: async function () {
         /// Source the truffle compiled smart contracts
         var jsonSupplyChain='../contracts/SupplyChain.json';
         
@@ -114,55 +113,39 @@ App = {
             var SupplyChainArtifact = data;
             App.contracts.SupplyChain = TruffleContract(SupplyChainArtifact);
             App.contracts.SupplyChain.setProvider(App.web3Provider);
-            
-            App.fetchItemBufferOne();
-            App.fetchItemBufferTwo();
-            App.fetchItemBufferThree();
-            App.fetchEvents();
-
         });
-
+        $("#address-of-contract-link").html(`<a href="https://rinkeby.etherscan.io/address/${App.metamaskAccountID}">Visit Contract on Etherscan</a>`)
+        
         return App.bindEvents();
     },
 
     bindEvents: function() {
         $(".click-events").on('click', App.handleButtonClick);
-        $(document).on('change', App.handleUpdate);
+        $("#imageOfItem").on('change', App.handleUpdate);
     },
 
+    
     handleUpdate: async function(event) {
-        App.sku = $("#sku").val();
-        App.upc = $("#upc").val();
-        App.ownerID = $("#ownerID").val();
-        App.originFarmerID = $("#originFarmerID").val();
-        App.originFarmName = $("#originFarmName").val();
-        App.originFarmInformation = $("#originFarmInformation").val();
-        App.originFarmLatitude = $("#originFarmLatitude").val();
-        App.originFarmLongitude = $("#originFarmLongitude").val();
-        App.productNotes = $("#productNotes").val();
-        App.productPrice = $("#productPrice").val();
-        App.distributorID = $("#distributorID").val();
-        App.retailerID = $("#retailerID").val();
-        App.consumerID = $("#consumerID").val();
-
         var processId = parseInt($(event.target).data('id'));
         console.log('processId',processId);
-
+        
+        App.readForm()
         switch(processId) {
             case 13:
                 return await App.settingImageHash(event);
                 break;
-        }
+            }
     },
 
     handleButtonClick: async function(event) {
         event.preventDefault();
-
+        
         App.getMetaskAccountID();
-
+        
+        App.readForm()
         var processId = parseInt($(event.target).data('id'));
         console.log('processId',processId);
-
+        
         switch(processId) {
             case 1:
                 return await App.harvestItem(event);
@@ -189,21 +172,32 @@ App = {
                 return await App.purchaseItem(event);
                 break;
             case 9:
-                return await App.fetchItemBufferOne(event);
+                return await App.fetchData(event);
                 break;
             case 10:
-                return await App.fetchItemBufferTwo(event);
+                return await App.settingRole(event);
                 break;
-            case 11:
-                return await App.fetchItemBufferThree(event);
-                break;
-            case 12:
-                return await App.getImageHash(event);
-                break;
-            case 14:
-                return await App.seeImage(event);
-                break;
-            }
+        }
+        
+    },
+
+    settingRole: async function(event) {
+        const instance = await App.contracts.SupplyChain.deployed();
+        await App.readForm();
+        if (App.originFarmerID) {
+            result = await instance.setFarmer(App.originFarmerID, {from: App.metamaskAccountID});
+            console.log(1, result);
+        }
+        if (App.distributorID) {
+            result = await instance.setDistributor(App.distributorID, {from: App.metamaskAccountID});
+            console.log(2, result);
+        }
+        if (App.retailerID) {
+            result = await instance.setRetailer(App.retailerID, {from: App.metamaskAccountID});
+            console.log(3, result);
+        }
+        window.alert("Role successfully set");
+        return;
     },
 
     settingImageHash: async function(event) {
@@ -217,243 +211,258 @@ App = {
 
     //Convert the file to buffer to store on IPFS
     convertToBuffer: async function(reader) {
-    //file is converted to a buffer for upload to IPFS
+        //file is converted to a buffer for upload to IPFS
         
         const buffer = await Buffer.from(reader.result);
-    //set this buffer-using es6 syntax
+        //set this buffer-using es6 syntax
         App.imageBuffer = buffer;
-           
+        
         this.uploadToIPFS()
     },
 
     uploadToIPFS: async function() {
-            
-            await App.ipfs.add(App.imageBuffer, (err, ipfsHash) => {
+        await App.ipfs.add(App.imageBuffer, (err, ipfsHash) => {
             console.log(err,ipfsHash);
             App.imageHash = ipfsHash[0].hash;
-                     
+            $('#upload-complete').html(`<image alt="image of Item" width="40" src="../images/upload-complete.png"/>`)  
         })
-        //setState by setting ipfsHash to ipfsHash[0].hash
-        // call Ethereum contract method "sendHash" and .send IPFS hash to etheruem contract
-        //return the transaction hash from the ethereum contract
-        //storehash.methods.sendHash(App.ipfsHash).send({
-        //  from: App.metamaskAccountID
-        //}, (error, transactionHash) => {
-        //  console.log(transactionHash);
-        //  this.setState({transactionHash});
-        //});
     },
 
     harvestItem: async function(event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-        
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-            return instance.harvestItem(
-                App.upc,
+        const instance = await App.contracts.SupplyChain.deployed();
+        await App.readForm();        
+        let result;
+        try {
+            result = await instance.harvestItem(
+                App.upcInput,
                 App.imageHash, 
                 App.metamaskAccountID, 
-                App.originFarmName, 
                 App.originFarmInformation, 
                 App.originFarmLatitude, 
                 App.originFarmLongitude, 
                 App.productNotes
-            , {from: App.metamaskAccountID});
-        }).then(function(result) {
-            $("#ftc-item").text(result);
-            console.log('harvestItem',result);
-        }).catch(function(err) {
+                , {from: App.metamaskAccountID}); 
+                    console.log(result);
+        } catch(err) {
             console.log(err.message);
-        });
+            alert(err.message);
+        }
+        console.log("Harvested", result);
+        alert(result);
     },
-
-    processItem: function (event) {
+        
+    processItem: async function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-            return instance.processItem(App.upc, {from: App.metamaskAccountID});
-        }).then(function(result) {
-            $("#ftc-item").text(result);
-            console.log('processItem',result);
-        }).catch(function(err) {
+        const instance = await App.contracts.SupplyChain.deployed();
+        let result;
+        try {
+            result = await instance.processItem(App.upc, {from: App.metamaskAccountID});
+        } 
+        catch(err) {
             console.log(err.message);
-        });
+            alert(err.message);
+        }
+        console.log("Processed", result);
+        alert(result)
     },
-    
-    packItem: function (event) {
+
+    packItem: async function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-            return instance.packItem(App.upc, {from: App.metamaskAccountID});
-        }).then(function(result) {
-            $("#ftc-item").text(result);
-            console.log('packItem',result);
-        }).catch(function(err) {
+        const instance = await App.contracts.SupplyChain.deployed();
+        let result;
+        try {
+            result = await instance.packItem(App.upc, {from: App.metamaskAccountID});
+        } 
+        catch(err) {
             console.log(err.message);
-        });
+            alert(err.message);
+        }
+        console.log("Packed", result);
+        alert(result)
     },
 
-    sellItem: function (event) {
+    sellItem: async function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-            const productPrice = web3.toWei(1, "ether");
-            console.log('productPrice',productPrice);
-            return instance.sellItem(App.upc, App.productPrice, {from: App.metamaskAccountID});
-        }).then(function(result) {
-            $("#ftc-item").text(result);
-            console.log('sellItem',result);
-        }).catch(function(err) {
+        const instance = await App.contracts.SupplyChain.deployed();
+        let result;
+        try {
+            result = await instance.sellItem(App.upc, App.productPrice, {from: App.metamaskAccountID});
+        } 
+        catch(err) {
             console.log(err.message);
-        });
+            alert(err.message);
+        }
+        console.log("sellItem", result);
+        alert(result)
     },
 
-    buyItem: function (event) {
+    buyItem: async function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-            const walletValue = web3.toWei(3, "ether");
-            return instance.buyItem(App.upc, {from: App.metamaskAccountID, value: walletValue});
-        }).then(function(result) {
-            $("#ftc-item").text(result);
-            console.log('buyItem',result);
-        }).catch(function(err) {
+        const instance = await App.contracts.SupplyChain.deployed();
+        let result;
+        try {
+            result = await instance.buyItem(App.upc, {from: App.metamaskAccountID});
+        } 
+        catch(err) {
             console.log(err.message);
-        });
+            alert(err.message);
+        }
+        console.log("buyItem", result);
+        alert(result)
     },
 
-    shipItem: function (event) {
+    shipItem: async function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-            return instance.shipItem(App.upc, {from: App.metamaskAccountID});
-        }).then(function(result) {
-            $("#ftc-item").text(result);
-            console.log('shipItem',result);
-        }).catch(function(err) {
+        const instance = await App.contracts.SupplyChain.deployed();
+        let result;
+        try {
+            result = await instance.shipItem(App.upc, {from: App.metamaskAccountID});
+        } catch(err) {
             console.log(err.message);
-        });
+            alert(err.message);
+        }
+        console.log("shipItem", result);
+        alert(result)
+
     },
 
-    receiveItem: function (event) {
+    receiveItem: async function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-            return instance.receiveItem(App.upc, {from: App.metamaskAccountID});
-        }).then(function(result) {
-            $("#ftc-item").text(result);
-            console.log('receiveItem',result);
-        }).catch(function(err) {
+        const instance = await App.contracts.SupplyChain.deployed();
+        let result;
+        try {
+            result = await instance.receiveItem(App.upc, {from: App.metamaskAccountID});
+        } catch(err) {
             console.log(err.message);
-        });
+            alert(err.message);
+        }
+        console.log("receiveItem", result);
+        alert(result)
     },
 
-    purchaseItem: function (event) {
+    purchaseItem: async function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-            return instance.purchaseItem(App.upc, {from: App.metamaskAccountID});
-        }).then(function(result) {
-            $("#ftc-item").text(result);
-            console.log('purchaseItem',result);
-        }).catch(function(err) {
+        const instance = await App.contracts.SupplyChain.deployed();
+        let result;
+        try {
+            result = await instance.purchaseItem(App.upc, {from: App.metamaskAccountID});
+        } catch(err) {
             console.log(err.message);
-        });
+            alert(err.message);
+        }
+        console.log("purchaseItem", result);
+        alert(result)
     },
 
-    fetchItemBufferOne: function () {
-    ///   event.preventDefault();
-    ///    var processId = parseInt($(event.target).data('id'));
-        App.upc = $('#upc').val();
-        console.log('upc',App.upc);
+    fetchData: async function() {
+        App.upc = $("#upc").val();
+        let fetchItemBufferOneResult; 
+        let fetchItemBufferTwoResult; 
+        let fetchItemBufferThreeResult; 
+        let fetchItemBufferImageHashResult; 
+        
+        try{
+            fetchItemBufferOneResult = await this.fetchItemBufferOne();
+            fetchItemBufferTwoResult = await this.fetchItemBufferTwo();
+            fetchItemBufferThreeResult = await this.fetchItemBufferThree();
+            fetchItemBufferImageHashResult = await this.getImageHash();
+        } catch(err) {
+            console.log(err);
+            return;
+        }
+        let state;
+        switch(fetchItemBufferTwoResult[6].toString()) {
+            case "0":
+                state = "Harvested";
+                break;
+            case "1":
+                state = "Processed";
+                break;
+            case "2":
+                state = "Packed";
+                break;
+            case "3":
+                state = "ForSale";
+                break;
+            case "4":
+                state = "Sold";
+                break;
+            case "5":
+                state = "Shipped";
+                break;
+            case "6":
+                state = "Received";
+                break;
+            case "7":
+                state = "Purchased";
+                break;
+            }
 
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-          return instance.fetchItemBufferOne(App.upc);
-        }).then(function(result) {
-          $("#ftc-item").text(result);
-          console.log('fetchItemBufferOne', result);
-        }).catch(function(err) {
-          console.log(err.message);
-        });
+        $("#itemSKULog").html(fetchItemBufferOneResult[0].toString())
+        $("#itemUPCLog").html(fetchItemBufferOneResult[1].toString())
+        $("#originFarmerIDLog").html(fetchItemBufferOneResult[2])
+        $("#originFarmNameLog").html(fetchItemBufferOneResult[3])
+        $("#originFarmInformationLog").html(fetchItemBufferOneResult[4])
+        $("#originFarmLatitudeLog").html(fetchItemBufferOneResult[5])
+        $("#originFarmLongitudeLog").html(fetchItemBufferOneResult[6])
+        $("#ownerIDLog").html(fetchItemBufferTwoResult[2])
+        $("#productIDLog").html(fetchItemBufferTwoResult[3].toString())
+        $("#productNotesLog").html(fetchItemBufferTwoResult[4])
+        $("#productPriceLog").html(fetchItemBufferTwoResult[5].toString())
+        $("#statusLog").html(state)
+        $("#distributorIDLog").html(fetchItemBufferThreeResult[2])
+        $("#retailerIDLog").html(fetchItemBufferThreeResult[3])
+        $("#consumerIDLog").html(fetchItemBufferThreeResult[4])
+        $("#imageItemLog").html(`<image alt="image of Item" width="200" src="https://ipfs.infura.io/ipfs/${fetchItemBufferImageHashResult}"/>`)
+    },
+    fetchItemBufferOne: async function () {
+        ///   event.preventDefault();
+        ///    var processId = parseInt($(event.target).data('id'));
+        const instance = await App.contracts.SupplyChain.deployed();
+        return instance.fetchItemBufferOne.call(App.upc)
     },
 
-    fetchItemBufferTwo: function () {
-    ///    event.preventDefault();
-    ///    var processId = parseInt($(event.target).data('id'));
-                        
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-          return instance.fetchItemBufferTwo.call(App.upc);
-        }).then(function(result) {
-          $("#ftc-item").text(result);
-          console.log('fetchItemBufferTwo', result);
-        }).catch(function(err) {
-          console.log(err.message);
-        });
+    fetchItemBufferTwo: async function () {
+        ///    event.preventDefault();
+        ///    var processId = parseInt($(event.target).data('id'));
+        const instance = await App.contracts.SupplyChain.deployed();
+        return instance.fetchItemBufferTwo.call(App.upc)
     },
 
-    fetchItemBufferThree: function () {
-    ///    event.preventDefault();
-    ///    var processId = parseInt($(event.target).data('id'));
-                        
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-          return instance.fetchItemBufferThree.call(App.upc);
-        }).then(function(result) {
-          $("#ftc-item").text(result);
-          console.log('fetchItemBufferThree', result);
-        }).catch(function(err) {
-          console.log(err.message);
-        });
+    fetchItemBufferThree: async function () {
+        ///    event.preventDefault();
+        ///    var processId = parseInt($(event.target).data('id'));
+        const instance = await App.contracts.SupplyChain.deployed();
+        return instance.fetchItemBufferThree.call(App.upc)        
     },
 
-    getImageHash: function (event) {
-    ///    event.preventDefault();
-    ///    var processId = parseInt($(event.target).data('id'));
-                        
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-          return instance.getImageHash.call(App.upc);
-        }).then(function(result) {
-            console.log(result);
-          $("#ftc-item").text(result);
-          console.log('getImageHash', result);
-        }).catch(function(err) {
-          console.log(err.message);
-        });
-    },
-
-    seeImage: function (event) {
-    ///    event.preventDefault();
-    ///    var processId = parseInt($(event.target).data('id'));
-                        
-        App.contracts.SupplyChain.deployed().then(function(instance) {
-          return instance.getImageHash.call(App.upc);
-        }).then(function(result) {
-            console.log(typeof result);
-            window.open((`https://ipfs.infura.io/ipfs/${result}`), '_blank');
-          $("#ftc-item").text(result);
-          console.log('getImageHash', result);
-        }).catch(function(err) {
-          console.log(err.message);
-        });
+    getImageHash: async function (event) {
+        ///    event.preventDefault();
+        ///    var processId = parseInt($(event.target).data('id'));
+        const instance = await App.contracts.SupplyChain.deployed();
+        return instance.getImageHash.call(App.upc)
     },
 
     fetchEvents: function () {
-    if (typeof App.contracts.SupplyChain.currentProvider.sendAsync !== "function") {
-        App.contracts.SupplyChain.currentProvider.sendAsync = function () {
-            return App.contracts.SupplyChain.currentProvider.send.apply(
-            App.contracts.SupplyChain.currentProvider,
-                arguments
-            );
-        };
-    }
+        if (typeof App.contracts.SupplyChain.currentProvider.sendAsync !== "function") {
+            App.contracts.SupplyChain.currentProvider.sendAsync = function () {
+                return App.contracts.SupplyChain.currentProvider.send.apply(
+                App.contracts.SupplyChain.currentProvider,
+                    arguments
+                );
+            };
+        }
 
-    App.contracts.SupplyChain.deployed().then(function(instance) {
+        App.contracts.SupplyChain.deployed().then(function(instance) {
         var events = instance.allEvents(function(err, log){
             if (!err)
             $("#ftc-events").append('<li>' + log.event + ' - ' + log.transactionHash + '</li>');

@@ -18,84 +18,110 @@
     </div>
 
     <div id="ftc-harvest">
-        <h2>Product Overview</h2>
+        <h2>View Product Details or Process It</h2>
+        <ol>The SupplyChain has the following steps:
+            <li>Item harvested by a farmer</li>
+            <li>Item processed by a farmer</li>
+            <li>Item packed by a farmer</li>
+            <li>Item sold by a farmer (must set a price)</li>
+            <li>Item bought by a distributor</li>
+            <li>Item shipped by a distributor</li>
+            <li>Item received by a retailer</li>
+            <li>Item purchased by a customer</li>
+        </ol>
         <div class="form-group">
-            SKU
-            <br>
-            <input class="input-field" type="number" id="sku" name="sku" value=1><br>
             UPC
             <br>
-            <input type="number" id="upc" name="upc" value=1><br>
-            Current Owner ID
+            <input class="input-field" type="number" id="upc" name="upc" value="1"/>
             <br>
-            <input type="text" id="ownerID" name="ownerID" value="0x963865f57804b38459dd4b2da2f760211a200438" size="50"><br>
+            <input type="number" id="productPrice" name="productPrice" />ETH
+            <br> 
+            <p>
+                <ul>
+                    <li>SKU: <span id="itemSKULog"></span></li>
+                    <li>UPC: <span id="itemUPCLog"></span></li>
+                    <li>Origin Farm Name: <span id="originFarmNameLog"></span></li>
+                    <li>Origin Farm Information: <span id="originFarmInformationLog"></span></li>
+                    <li>Origin Farm Latitude: <span id="originFarmLatitudeLog"></span></li>
+                    <li>Origin Farm Longtitude: <span id="originFarmLongitudeLog"></span></li>
+                    <li>Current Owner ID: <span id="ownerIDLog"></span></li>
+                    <li>Current Status: <span id="statusLog"></span></li>
+                    <li>Product ID: <span id="productIDLog"></span></li>
+                    <li>Product Notes: <span id="productNotesLog"></span></li>
+                    <li>Product Price: <span id="productPriceLog"></span></li>
+                    <li>Distributor ID: <span id="distributorIDLog"></span></li>
+                    <li>Retailer ID: <span id="retailerIDLog"></span></li>
+                    <li>Consumer ID: <span id="consumerIDLog"></span></li>
+                    <li>Image of Item: <span id="imageItemLog"></span></li>
+                </ul>
+            </p>
             <div class="button-div click-events">
-                <button class="btn-fetchOne" id="button" type="button" data-id="9">Fetch Data 1</button>
-                <button class="btn-fetchTwo" id="button" type="button" data-id="10">Fetch Data 2</button>
-                <button class="btn-fetchThree" id="button" type="button" data-id="11">Fetch Data 3</button>
-                <button class="btn-fetchImageHash" id="button" type="button" data-id="12">Get Image Hash</button>
-                <button class="btn-fetchImageHash" id="button" type="button" data-id="14">See image</button>
-            </div>
-        </div>
-        <div class=form-break></div>
-        <h2>Farm Details</h2>
-        <div class="form-group">
-            Image of Item
-            <br>
-            <input type="file" id="imageOfItem" name="imageOfItem" value="" accept="image/png, image/jpeg" size="50" 
-            data-id="13" required><br>
-            Farmer ID
-            <br>
-            <input type="text" id="originFarmerID" name="originFarmerID" value="0x99c289eb2aacec289631a5ddf62cf27a63d4494f"
-                size="50"><br>
-            Farm Name
-            <br>
-            <input type="text" id="originFarmName" name="originFarmName" value="John Doe"><br>
-            Farm Information
-            <br>
-            <input type="text" id="originFarmInformation" name="originFarmInformation" value="Yarra Valley"><br>
-            Farm Latitude
-            <br>
-            <input type="text" id="originFarmLatitude" name="originFarmLatitude" value="-38.239770"><br>
-            Farm Longitude
-            <br>
-            <input type="text" id="originFarmLongitude" name="originFarmLongitude" value="144.341490"><br>
-            <br>
-            <div class="click-events">
-                <button class="btn-harvest" id="button" type="button" data-id="1">Harvest</button>
+                <button class="btn-fetchItems" id="button" type="button" data-id="9">Fetch Data</button>
                 <button class="btn-process" id="button" type="button" data-id="2">Process</button>
                 <button class="btn-pack" id="button" type="button" data-id="3">Pack</button>
                 <button class="btn-forsale" id="button" type="button" data-id="4">ForSale</button>
-            </div>
-        </div>
-        <div class=form-break></div>
-        <h2>Product Details</h2>
-        <div class="form-group">
-            Product Notes
-            <br>
-            <input type="text" id="productNotes" name="productNotes" value="Best beans for Espresso" size="60"><br>
-            Product Price
-            <br>
-            <input type="number" id="productPrice" name="productPrice" value=1>ETH<br>
-            Distributor ID
-            <br>
-            <input type="text" id="distributorID" name="distributorID" value="0xf1b1bcd24dad92303dd9fe78be639f7bcf9c238d"
-                size="50">
-            <br>
-            Retailer ID
-            <br>
-            <input type="text" id="retailerID" name="retailerID" value="0x0fb2bfefd526966c87efa19f6693d50971763fc2"
-                size="50"><br>
-            Distributor ID
-            <br>
-            <input type="text" id="consumerID" name="consumerID" value="0x5d777e9127b28fb119e81a6304278a0a21bef1c4"
-                size="50"><br>
-            <br>
-            <div class="click-events">
                 <button class="btn-buy" id="button" type="button" data-id="5">Buy</button>
                 <button class="btn-ship" id="button" type="button" data-id="6">Ship</button>
                 <button class="btn-receive" id="button" type="button" data-id="7">Receive</button>
                 <button class="btn-purchase" id="button" type="button" data-id="8">Purchase</button>
+            </div>
+        </div>
+        <div class=form-break></div>
+        <h2>Add Item to the Supply Chain</h2>
+        <p>All Fields are required to be filled with valid data (except)*</p>
+        <p>Only a farmer can submit the form</p>
+        <p>*Product Price: Only required for the "ForSale" process</p>
+        <div class="form-group">
+            Image of Item
+            <br>
+            <span class="change-reaction"></span>
+                <input type="file" id="imageOfItem" name="imageOfItem"  accept="image/png, image/jpeg" size="50" 
+                data-id="13" required />
+            </span>
+            <span id="upload-complete"></span>
+            <br>
+            UPC
+            <br>
+            <input type="text" id="upcInput" name="upcInput" required /><br>
+            Farm Name
+            <br>
+            <input type="text" id="originFarmName" name="originFarmName" required /><br>
+            Farm Information
+            <br>
+            <input type="text" id="originFarmInformation" name="originFarmInformation" required /><br>
+            Farm Latitude
+            <br>
+            <input type="text" id="originFarmLatitude" name="originFarmLatitude" required /><br>
+            Farm Longitude
+            <br>
+            <input type="text" id="originFarmLongitude" name="originFarmLongitude" required /><br>
+            Product Notes
+            <br>
+            <input type="text" id="productNotes" name="productNotes" size="60" required /><br>
+            <br>
+            Product Price
+            <br>      
+            <div class="click-events">
+                <button class="btn-harvest" id="button" type="button" data-id="1">Harvest</button>
+            </div>
+        </div>
+        <div class=form-break></div>
+        <h2>Assigning Rules</h2>
+        <p>This can only be done by the contract owner!</p>
+        <div class="form-group">
+            Farmer ID
+            <br>
+            <input type="text" id="originFarmerID" name="distributorID"                 size="50" />
+            <br>
+            Retailer ID
+            <br>
+            <input type="text" id="retailerID" name="retailerID"                 size="50" /><br>
+            Distributor ID
+            <br>
+            <input type="text" id="distributorID" name="consumerID"                 size="50"/><br>
+            <br>
+            <div class="click-events">
+                    <button class="btn-setting-role" id="button" type="button" data-id="10">Setting Roles</button>
             </div>
         </div>
         <div class=form-break></div>
@@ -104,9 +130,8 @@
 
     <h2>Transaction History<span id="ftc-history"></span></h2>
     <div>
-        <ul id="ftc-events">
-            <!-- Events will appear here from app.js -->
-        </ul>
+        <span id="address-of-contract-link"></span>
+        <lu id="#ftc-events"></lu>
         <br>
         <hr>
     </div>

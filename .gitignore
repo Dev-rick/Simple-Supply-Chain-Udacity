@@ -3,3 +3,4 @@ migration-secrets.js
 temp
 dist
 build
+build/contracts
