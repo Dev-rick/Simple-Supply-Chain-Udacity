@@ -23,11 +23,11 @@ This repository containts an Ethereum DApp that demonstrates a Supply Chain flow
 
 ## Preview
 
-    ![app-preview-image-1](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-1.PNG)
-    ![app-preview-image-2](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-2.PNG)
-    ![app-preview-image-3](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-3.PNG)
-    ![app-preview-image-4](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-4.PNG)
-    ![app-preview-image-5](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-5.PNG)
+![app-preview-image-1](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-1.PNG)
+![app-preview-image-2](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-2.PNG)
+![app-preview-image-3](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-3.PNG)
+![app-preview-image-4](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-4.PNG)
+![app-preview-image-5](https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-5.PNG)
 
 
 ## Getting Started
