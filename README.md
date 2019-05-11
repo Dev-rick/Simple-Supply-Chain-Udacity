@@ -12,7 +12,7 @@ This repository containts an Ethereum DApp that demonstrates a Supply Chain flow
 
 * Retailer can only: RECEIVE
 
-**CURRENT:** live version of contract: [ETHERSCAN](https://rinkeby.etherscan.io/address/0x3855DC28C02a2d7BC2270D4CAcAC31D98e15ccE6)
+**CURRENT:** live version of contract: [ETHERSCAN](https://rinkeby.etherscan.io/address/0x0b0f0D2C24E795133Bf66a977B1F8e9d73759429)
 
 **OTHER UPDATES COMING SOON**
 
@@ -20,6 +20,20 @@ This repository containts an Ethereum DApp that demonstrates a Supply Chain flow
 * Include OpenZeppelin structures
 * User Interface Design
 * Code optimization
+
+## Preview
+
+    ![alt text][app-preview-image-1]
+    ![alt text][app-preview-image-2]
+    ![alt text][app-preview-image-3]
+    ![alt text][app-preview-image-4]
+    ![alt text][app-preview-image-5]
+
+    [app-preview-image-1]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-1.PNG "app preview"
+    [app-preview-image-2]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-2.PNG "app preview"
+    [app-preview-image-3]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-3.PNG "app preview"
+    [app-preview-image-4]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-4.PNG "app preview"
+    [app-preview-image-5]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-5.PNG "app preview"
 
 
 ## Getting Started

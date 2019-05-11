@@ -32,6 +32,7 @@ App = {
     },
     
     readForm: async function () {  
+        App.getMetaskAccountID()
         App.upc = $("#upc").val()
         App.upcInput = $("#upcInput").val()
         App.originFarmerID = $("#originFarmerID").val();
@@ -87,9 +88,6 @@ App = {
         return App.initSupplyChain();
     },
     
-
-    //@dev CHANGING App.metamaskAccount!!!
-
     getMetaskAccountID: function () {
         web3 = new Web3(App.web3Provider);
         
@@ -111,7 +109,6 @@ App = {
         
         /// JSONfy the smart contracts
         $.getJSON(jsonSupplyChain, function(data) {
-            console.log('data',data);
             var SupplyChainArtifact = data;
             App.contracts.SupplyChain = TruffleContract(SupplyChainArtifact);
             App.contracts.SupplyChain.setProvider(App.web3Provider);
@@ -128,7 +125,7 @@ App = {
     
     handleUpdate: async function(event) {
         var processId = parseInt($(event.target).data('id'));
-        console.log('processId',processId);
+        
         
         App.readForm()
         switch(processId) {
@@ -145,7 +142,7 @@ App = {
         
         App.readForm()
         var processId = parseInt($(event.target).data('id'));
-        console.log('processId',processId);
+        
         
         switch(processId) {
             case 1:
@@ -187,15 +184,15 @@ App = {
         await App.readForm();
         if (App.originFarmerID) {
             result = await instance.setFarmer(App.originFarmerID, {from: App.metamaskAccountID});
-            console.log(1, result);
+            console.log(result);
         }
         if (App.distributorID) {
             result = await instance.setDistributor(App.distributorID, {from: App.metamaskAccountID});
-            console.log(2, result);
+            console.log(result);
         }
         if (App.retailerID) {
             result = await instance.setRetailer(App.retailerID, {from: App.metamaskAccountID});
-            console.log(3, result);
+            console.log(result);
         }
         window.alert("Role successfully set");
         return;
@@ -245,13 +242,12 @@ App = {
                 App.originFarmLongitude, 
                 App.productNotes
                 , {from: App.metamaskAccountID}); 
-                    console.log(result);
+                console.log("Harvested", result);     
         } catch(err) {
             console.log(err.message);
             alert(err.message);
         }
-        console.log("Harvested", result);
-        alert(result);
+        
     },
         
     processItem: async function (event) {
@@ -261,13 +257,12 @@ App = {
         let result;
         try {
             result = await instance.processItem(App.upc, {from: App.metamaskAccountID});
+            console.log("Processed", result);
         } 
         catch(err) {
             console.log(err.message);
             alert(err.message);
         }
-        console.log("Processed", result);
-        alert(result)
     },
 
     packItem: async function (event) {
@@ -277,13 +272,13 @@ App = {
         let result;
         try {
             result = await instance.packItem(App.upc, {from: App.metamaskAccountID});
+            console.log("Packed", result);
         } 
         catch(err) {
             console.log(err.message);
             alert(err.message);
         }
-        console.log("Packed", result);
-        alert(result)
+        
     },
 
     sellItem: async function (event) {
@@ -293,13 +288,13 @@ App = {
         let result;
         try {
             result = await instance.sellItem(App.upc, App.productPrice, {from: App.metamaskAccountID});
+            console.log("sellItem", result);
         } 
         catch(err) {
             console.log(err.message);
             alert(err.message);
         }
-        console.log("sellItem", result);
-        alert(result)
+        
     },
 
     buyItem: async function (event) {
@@ -309,13 +304,13 @@ App = {
         let result;
         try {
             result = await instance.buyItem(App.upc, {from: App.metamaskAccountID});
+            console.log("buyItem", result);
         } 
         catch(err) {
             console.log(err.message);
             alert(err.message);
         }
-        console.log("buyItem", result);
-        alert(result)
+        
     },
 
     shipItem: async function (event) {
@@ -325,12 +320,12 @@ App = {
         let result;
         try {
             result = await instance.shipItem(App.upc, {from: App.metamaskAccountID});
+            console.log("shipItem", result);
         } catch(err) {
             console.log(err.message);
             alert(err.message);
         }
-        console.log("shipItem", result);
-        alert(result)
+        
 
     },
 
@@ -341,12 +336,12 @@ App = {
         let result;
         try {
             result = await instance.receiveItem(App.upc, {from: App.metamaskAccountID});
+            console.log("receiveItem", result);
         } catch(err) {
             console.log(err.message);
             alert(err.message);
         }
-        console.log("receiveItem", result);
-        alert(result)
+        
     },
 
     purchaseItem: async function (event) {
@@ -356,12 +351,12 @@ App = {
         let result;
         try {
             result = await instance.purchaseItem(App.upc, {from: App.metamaskAccountID});
+            console.log("purchaseItem", result);
         } catch(err) {
             console.log(err.message);
             alert(err.message);
         }
-        console.log("purchaseItem", result);
-        alert(result)
+        
     },
 
     fetchData: async function() {
