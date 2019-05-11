@@ -29,11 +29,11 @@ This repository containts an Ethereum DApp that demonstrates a Supply Chain flow
     ![alt text][app-preview-image-4]
     ![alt text][app-preview-image-5]
 
-    [app-preview-image-1]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-1.PNG "app preview"
-    [app-preview-image-2]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-2.PNG "app preview"
-    [app-preview-image-3]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-3.PNG "app preview"
-    [app-preview-image-4]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-4.PNG "app preview"
-    [app-preview-image-5]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/app-image-5.PNG "app preview"
+    [app-preview-image-1]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-1.PNG "app preview"
+    [app-preview-image-2]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-2.PNG "app preview"
+    [app-preview-image-3]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-3.PNG "app preview"
+    [app-preview-image-4]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-4.PNG "app preview"
+    [app-preview-image-5]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/app-image-5.PNG "app preview"
 
 
 ## Getting Started
@@ -92,7 +92,7 @@ Please make sure you've enabled [MetaMask extension](https://metamask.io/) in yo
 
     ![alt text][INFURA-key]
 
-    [INFURA-key]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/tutorial-images/INFURA-key.PNG "INFURA-key"
+    [INFURA-key]: https://github.com/Userrick/Simple-Supply-Chain-Udacity/blob/master/tutorial-images/INFURA-key.PNG "INFURA-key"
 
     d) PASTE it into the respective field in the **secrets-migration.js** file
 
