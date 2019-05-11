@@ -12,7 +12,7 @@ This repository containts an Ethereum DApp that demonstrates a Supply Chain flow
 
 * Retailer can only: RECEIVE
 
-**CURRENT:** live version of contract: [ETHERSCAN](https://rinkeby.etherscan.io/address/0x33cb39Ba7E4a9818d03abB9211c966520c7f04a8)
+**CURRENT:** live version of contract: [ETHERSCAN](https://rinkeby.etherscan.io/address/0x3855DC28C02a2d7BC2270D4CAcAC31D98e15ccE6)
 
 **OTHER UPDATES COMING SOON**
 

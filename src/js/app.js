@@ -34,7 +34,6 @@ App = {
     readForm: async function () {  
         App.upc = $("#upc").val()
         App.upcInput = $("#upcInput").val()
-        App.imageHash = await App.getImageHash()
         App.originFarmerID = $("#originFarmerID").val();
         App.originFarmName = $("#originFarmName").val();
         App.originFarmInformation = $("#originFarmInformation").val();
@@ -88,6 +87,9 @@ App = {
         return App.initSupplyChain();
     },
     
+
+    //@dev CHANGING App.metamaskAccount!!!
+
     getMetaskAccountID: function () {
         web3 = new Web3(App.web3Provider);
         
@@ -99,8 +101,8 @@ App = {
             }
             console.log('getMetaskID:',res);
             App.metamaskAccountID = res[0];
-            
         })
+        $("#address-of-contract-link").html(`<a href="https://rinkeby.etherscan.io/address/${App.metamaskAccountID}">Visit Contract on Etherscan</a>`)
     },
     
     initSupplyChain: async function () {
@@ -114,7 +116,6 @@ App = {
             App.contracts.SupplyChain = TruffleContract(SupplyChainArtifact);
             App.contracts.SupplyChain.setProvider(App.web3Provider);
         });
-        $("#address-of-contract-link").html(`<a href="https://rinkeby.etherscan.io/address/${App.metamaskAccountID}">Visit Contract on Etherscan</a>`)
         
         return App.bindEvents();
     },
@@ -224,7 +225,7 @@ App = {
         await App.ipfs.add(App.imageBuffer, (err, ipfsHash) => {
             console.log(err,ipfsHash);
             App.imageHash = ipfsHash[0].hash;
-            $('#upload-complete').html(`<image alt="image of Item" width="40" src="../images/upload-complete.png"/>`)  
+            $('#upload-complete').html(`<image alt="image of Item" width="30" src="../images/upload-complete.png"/>`)  
         })
     },
 
@@ -422,7 +423,7 @@ App = {
         $("#distributorIDLog").html(fetchItemBufferThreeResult[2])
         $("#retailerIDLog").html(fetchItemBufferThreeResult[3])
         $("#consumerIDLog").html(fetchItemBufferThreeResult[4])
-        $("#imageItemLog").html(`<image alt="image of Item" width="200" src="https://ipfs.infura.io/ipfs/${fetchItemBufferImageHashResult}"/>`)
+        $("#imageItemLog").html(`<image class="image-of-item" alt="image of Item" width="200" src="https://ipfs.infura.io/ipfs/${fetchItemBufferImageHashResult}"/>`)
     },
     fetchItemBufferOne: async function () {
         ///   event.preventDefault();

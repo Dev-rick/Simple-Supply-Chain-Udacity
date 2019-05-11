@@ -54,7 +54,7 @@ contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole 
     string  productNotes; // Product Notes
     uint    productPrice; // Product Price
     State   itemState;  // Product State as represented in the enum above
-    address distributorID;  // Metamask-Ethereum address of the Distributor
+    address payable distributorID;  // Metamask-Ethereum address of the Distributor
     address retailerID; // Metamask-Ethereum address of the Retailer
     address payable consumerID; // Metamask-Ethereum address of the Consumer
   }
@@ -169,7 +169,6 @@ contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole 
   constructor() public payable {
     owner = msg.sender;
     sku = 1;
-    upc = 1;
   }
 
   // Define a function 'kill' if required
@@ -411,7 +410,7 @@ contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole 
   (
   uint    itemSKU,
   uint    itemUPC,
-  address distributorID,
+  address payable distributorID,
   address retailerID,
   address consumerID
   )
