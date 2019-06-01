@@ -7,7 +7,7 @@
     "dev": "gulp"
   },
   "keywords": [],
-  "author": "pk <rickwarling@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
+  "author": "Rick Warling <rickwarling@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "ipfs-api": "^26.1.2",
-    "truffle-hdwallet-provider": "1.0.1",
+    "truffle-hdwallet-provider": "^1.0.1",
     "web3": "^1.0.0-beta.37"
   }
 }

@@ -58,12 +58,12 @@ Please make sure you've enabled [MetaMask extension](https://metamask.io/) in yo
     $ touch migration-secrets.js
     ```
 
-4. Copy the following into it:
+4. Copy the following into it (attention to https://):
 
     ```javascript
     const secrets = {
         mnemonic: "YOUR-SEED-WORDS-FROM-METAMASK-ACCOUNT",
-        ENDPOINT: "YOUR-INFURA-ENDPOINT_KEY"
+        ENDPOINT: "https://YOUR-INFURA-ENDPOINT_KEY"
     }
 
     module.exports = secrets;
